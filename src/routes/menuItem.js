@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { successResponse, serverError } = require("../helpers/response");
-const { Categories, MenuItem } = require("../models");
+const { Categories, MenuItem, Place } = require("../models");
 const auth = require("../middleware/authJwt");
 
 /**
@@ -59,13 +59,16 @@ router.post("/update/:id", auth, async (req, res) => {
 /**
  * @Get_Menu_For_Web
  */
-router.get("/getAllForWeb/:id", async (req, res) => {
-  Categories.findAll({
-    where: { PlaceID: req.params.id },
-    include: [{ model: MenuItem }],
+router.get("/getAllForWeb/:slug", async (req, res) => {
+  await Place.findOne({
+    where: { PlaceSlug: req.params.slug },
+    include: [{model: Categories, include: [{ model: MenuItem, where: {IsActive: 1} }]}],
+    // attributes: ["PlaceName", "Logo", "PlaceSlug", 'ID']
   })
-    .then((result) => successResponse(res, req, result, "Menu"))
-    .catch((err) => serverError(res, req, err));
+    .then((result) =>{ 
+      console.log(result);
+      successResponse(res, result, "Menu")})
+    .catch((err) => serverError(res,err));
 });
 
 module.exports = router;
