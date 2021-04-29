@@ -1,9 +1,9 @@
 {
     "development": {
-      "username": "epiz_28436766",
-      "password": "QX5sSHRy3BsJc",
-      "database": "epiz_28436766_quickorder",
+      "username": "root",
+      "password": "",
+      "database": "quickorder",
       "dialect": "mysql",
-      "host" : "sql206.epizy.com"
+      "host" : "localhost"
     }
   }
