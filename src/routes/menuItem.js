@@ -66,7 +66,7 @@ router.get("/getAllForWeb/:slug", async (req, res) => {
     // attributes: ["PlaceName", "Logo", "PlaceSlug", 'ID']
   })
     .then((result) =>{ 
-      console.log(result);
+      console.log(result, "slug");
       successResponse(res, result, "Menu")})
     .catch((err) => serverError(res,err));
 });

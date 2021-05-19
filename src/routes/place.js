@@ -12,7 +12,6 @@ const { constants } = require("../helpers/commonHelper");
  * @Add_New_Place register a new place
  */
 router.post("/newPlace", async (req, res) => {
-  console.log('i am hit');
   const { Password, PlaceName, PlaceSlug } = req.body;
 
   await Place.findOne({ where: { PlaceSlug }, raw: true })
@@ -50,7 +49,6 @@ router.post("/newPlace", async (req, res) => {
  */
 router.post("/placeLogin", async (req, res) => {
   let { PlaceSlug, Password } = req.body;
-
   await Place.findOne({ where: { PlaceSlug }, raw: true }).then(
     async (result) => {
       if (!result) return unauthorized(res, "Invalid credentials");
@@ -69,7 +67,10 @@ router.post("/placeLogin", async (req, res) => {
         }
       );
     }
-  );
+  ).catch(err => {
+    console.log(err);
+    serverError(res, err)
+  })
 });
 
 /**
