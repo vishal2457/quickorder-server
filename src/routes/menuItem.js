@@ -8,14 +8,8 @@ const auth = require("../middleware/authJwt");
  * @Add_Menu_Item
  */
 router.post("/addNew", auth, async (req, res) => {
-  let {
-    CategoryID,
-    ItemDescription,
-    Name,
-    FoodType,
-    Price,
-    Ingredients,
-  } = req.body;
+  let { CategoryID, ItemDescription, Name, FoodType, Price, Ingredients } =
+    req.body;
 
   await MenuItem.create({
     CategoryID,
@@ -46,12 +40,15 @@ router.get("/getAll", auth, async (req, res) => {
  * @Update_Menu_Item
  */
 router.post("/update/:id", auth, async (req, res) => {
-  await MenuItem.update({ ...req.body }, { where: { ID: req.params.id } })
+  await MenuItem.update(
+    { ...req.body, Ingredients: req.body.Ingredients.toString() },
+    { where: { ID: req.params.id } }
+  )
     .then((result) => {
-      return MenuItem.findOne({ where: { ID: req.params.ID } });
+      return MenuItem.findOne({ where: { ID: req.params.id } });
     })
     .then((result) =>
-      successResponse(res, req, result, "Menu updated successfully")
+      successResponse(res, result, "Menu updated successfully")
     )
     .catch((err) => serverError(res, err));
 });
@@ -62,13 +59,29 @@ router.post("/update/:id", auth, async (req, res) => {
 router.get("/getAllForWeb/:slug", async (req, res) => {
   await Place.findOne({
     where: { PlaceSlug: req.params.slug },
-    include: [{model: Categories, include: [{ model: MenuItem, where: {IsActive: 1} }]}],
+    include: [
+      {
+        model: Categories,
+        include: [{ model: MenuItem, where: { IsActive: 1 } }],
+      },
+    ],
     // attributes: ["PlaceName", "Logo", "PlaceSlug", 'ID']
   })
-    .then((result) =>{ 
+    .then((result) => {
       console.log(result, "slug");
-      successResponse(res, result, "Menu")})
-    .catch((err) => serverError(res,err));
+      successResponse(res, result, "Menu");
+    })
+    .catch((err) => serverError(res, err));
+});
+
+/**
+ * @Active_Inactive_MenuItem
+ */
+router.get("/toggleActive/:id/:state", auth, async (req, res) => {
+  let switchState = req.params.state == 'true' ? 0 : 1
+  await MenuItem.update({IsActive: switchState}, {where: {ID: req.params.id}})
+  .then(result => successResponse(res, result, "Menu updated successfully"))
+  .catch(err => serverError(res, err))
 });
 
 module.exports = router;

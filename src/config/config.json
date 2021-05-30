@@ -1,9 +1,16 @@
 {
     "development": {
-      "username": "root",
-      "password": "",
+      "username": "vishal",
+      "password": "vishal",
       "database": "quickorder",
       "dialect": "mysql",
-      "host" : "localhost"
+      "host" : "192.168.64.2"
+    },
+    "production": {
+      "username": "expolyst_proses",
+      "password": "proses1412",
+      "database": "expolyst_quickorder",
+      "dialect": "mysql",
+      "host" : "expolyst.com"
     }
   }

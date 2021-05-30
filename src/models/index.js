@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 let mode = { development: "development", production: "production", test: "test" };
 
-let env = mode.development;
+let env = mode.production;
 const config = require(__dirname + "/../config/config.json")[env];
 const fs = require("fs");
 const path = require("path");
