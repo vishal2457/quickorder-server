@@ -8,10 +8,18 @@ let roles = {
   }
 
   let constants = {
-    JWT_SECRET: 'QUICK_ORDER'
+    JWT_SECRET: 'QUICK_ORDER',
+    ORDER_STATUS: {
+      Finished: "Finished",
+      Pending: "Pending",
+      Unpaid: "Unpaid"
+    }
   }
+
+  const ORDER_SOCKET = "ORDER-RECIEVED"
 
   module.exports = {
       roles,
-      constants
+      constants,
+      ORDER_SOCKET
   }

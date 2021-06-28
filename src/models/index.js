@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-let mode = { development: "development", production: "production", test: "test" };
+let mode = { development: "development", production: "production",};
 
 let env = mode.production;
 const config = require(__dirname + "/../config/config.json")[env];
@@ -64,7 +64,15 @@ db.Place.hasMany(db.FoodOrder, {foreignKey: "PlaceID" })
 db.MenuItem.hasMany(db.FoodOrderDetail, {foreignKey: "MenuItemID"})
 db.FoodOrderDetail.belongsTo(db.MenuItem, {foreignKey: "MenuItemID"})
 db.FoodOrderDetail.belongsTo(db.FoodOrder, {foreignKey: "FoID"})
-db.FoodOrder.hasMany(db.FoodOrderDetail, {foreignKey: "FoID"})
+db.FoodOrder.hasMany(db.FoodOrderDetail, {foreignKey: "FoID"});
 
+
+
+db.MenuItem.hasMany(db.Types, {foreignKey: "MenuItemID"})
+db.Types.belongsTo(db.MenuItem, {foreignKey: "MenuItemID"})
+
+
+db.MenuItem.hasMany(db.AddOns, {foreignKey: "MenuItemID"})
+db.AddOns.belongsTo(db.MenuItem, {foreignKey: "MenuItemID"})
 
 module.exports = db

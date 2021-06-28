@@ -28,7 +28,8 @@ module.exports = (sequelize, DataType) => {
           type: DataType.ENUM({
             values: [
               "Pending",
-              "Finished"
+              "Finished",
+              "Unpaid"
             ],
           }),
           defaultValue: "Pending",

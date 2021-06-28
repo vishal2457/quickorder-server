@@ -4,5 +4,4 @@ module.exports = function (app) {
       .use("/menuItem", require("./menuItem"))
       .use("/foodOrder", require("./foodOrder"))
       .use("/categories", require("./categories"))
-  };
-  
+};
